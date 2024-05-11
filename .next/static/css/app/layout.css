@@ -67,9 +67,9 @@
 }.__className_aaf875 {font-family: '__Inter_aaf875', '__Inter_Fallback_aaf875';font-style: normal
 }
 
-/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[3]!./src/app/globals.css ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[3]!./src/styles/globals.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
 /*
 ! tailwindcss v3.4.3 | MIT License | https://tailwindcss.com
 *//*
@@ -573,19 +573,74 @@ video {
   --tw-contain-paint:  ;
   --tw-contain-style:  ;
 }
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.flex {
+  display: flex;
+}
 .min-h-screen {
   min-height: 100vh;
+}
+.min-w-full {
+  min-width: 100%;
+}
+.max-w-\[500px\] {
+  max-width: 500px;
+}
+.max-w-\[600px\] {
+  max-width: 600px;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.gap-10 {
+  gap: 2.5rem;
 }
 .bg-\[\#e5e8ec\] {
   --tw-bg-opacity: 1;
   background-color: rgb(229 232 236 / var(--tw-bg-opacity));
 }
+.bg-\[\#5dc9a8\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(93 201 168 / var(--tw-bg-opacity));
+}
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-extrabold {
+  font-weight: 800;
+}
+.font-medium {
+  font-weight: 500;
+}
 .text-zinc-900 {
   --tw-text-opacity: 1;
   color: rgb(24 24 27 / var(--tw-text-opacity));
+}
+@media (min-width: 1280px) {
+
+  .xl\:flex-row {
+    flex-direction: row;
+  }
 }
 
