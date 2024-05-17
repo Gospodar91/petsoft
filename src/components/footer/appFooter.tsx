@@ -1,5 +1,9 @@
 import React from "react";
 
 export default function AppFooter() {
-  return <div>appFooter</div>;
+  return (
+    <footer className=" border-t border-black/5 py-10   mt-auto  ">
+      <small className="opacity-50">@ copyright Gospodar91</small>
+    </footer>
+  );
 }
