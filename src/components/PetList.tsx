@@ -1,16 +1,10 @@
+import { TPet } from "@/lib/types";
 import Image from "next/image";
 
 type TPetlistProp = {
   pets: TPet[];
 };
-type TPet = {
-  id: string;
-  name: string;
-  ownerName: string;
-  imageUrl: string;
-  age: number;
-  notes: string;
-};
+
 export default function PetList({ pets }: TPetlistProp) {
   return (
     <ul>
