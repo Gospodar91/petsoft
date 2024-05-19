@@ -1,4 +1,5 @@
 import PetsContextProvider from "@/app/context/PetsContext";
+import { SeacrhContextProvider } from "@/app/context/SecrhFormContext";
 import BackGroundPatter from "@/components/backGroundPatter";
 import AppFooter from "@/components/footer/appFooter";
 import AppHeader from "@/components/header/appHeader";
@@ -15,9 +16,11 @@ export default async function Layout({ children }: TReactNode) {
       <BackGroundPatter />
       <div className=" flex flex-col  max-w-[1050px] mx-auto px-4 min-h-screen">
         <PetsContextProvider data={parsedPetData}>
-          <AppHeader />
-          {children}
-          <AppFooter />;
+          <SeacrhContextProvider>
+            <AppHeader />
+            {children}
+            <AppFooter />;
+          </SeacrhContextProvider>
         </PetsContextProvider>
       </div>
     </>
