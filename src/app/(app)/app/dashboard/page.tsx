@@ -4,6 +4,7 @@ import PetDetails from "@/components/PetDetails";
 import PetList from "@/components/PetList";
 import SearchForm from "@/components/SearchForm";
 import Stats from "@/components/Stats";
+import PetButtons from "@/components/petButtons";
 
 export default async function Dashboard() {
   return (
@@ -16,9 +17,12 @@ export default async function Dashboard() {
         <div className="  md:row-start-1 md:row-span-1 md:col-start-1 md:col-span-1">
           <SearchForm />
         </div>
-        <div className="md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1">
+        <div className="relative md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1">
           <ContentBlock>
             <PetList />
+            <div className=" absolute bottom-4 right-4">
+              <PetButtons actionType="add" />
+            </div>
           </ContentBlock>
         </div>
         <div className=" md:row-start-1 md:row-span-full md:col-start-2 md:col-span-full">

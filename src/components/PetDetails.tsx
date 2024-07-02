@@ -2,9 +2,10 @@
 import Image from "next/image";
 import { usePetsContext } from "@/lib/hooks";
 import { TPet } from "@/lib/types";
+import PetButtons from "./petButtons";
 
 type TgeneralProps = {
-  pet: TPet | undefined;
+  pet: TPet;
 };
 
 export default function PetDetails() {
@@ -26,6 +27,7 @@ export default function PetDetails() {
 }
 
 function TopBar({ pet }: TgeneralProps) {
+  const { handleCheckoutPet } = usePetsContext();
   return (
     <div className="  bg-white flex px-5 py-6 items-center  border-b-2  border-light">
       <Image
@@ -36,6 +38,15 @@ function TopBar({ pet }: TgeneralProps) {
         className=" w-[75px] h-[75px] rounded-full object-cover"
       />
       <h2 className=" text-3xl font-semibold  leading-7  ml-5">{pet?.name}</h2>
+      <div className=" ml-auto space-x-3">
+        <PetButtons actionType="edit">Edit</PetButtons>
+        <PetButtons
+          onClick={() => handleCheckoutPet(pet?.id)}
+          actionType="checkout"
+        >
+          Checkout
+        </PetButtons>
+      </div>
     </div>
   );
 }

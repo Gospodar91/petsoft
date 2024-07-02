@@ -10,6 +10,7 @@ type TPetsContex = {
   pets: TPet[];
   selectedPetId: string | null;
   handleChangePetId: (id: string) => void;
+  handleCheckoutPet: (id: string) => void;
   selectedPet: TPet | undefined;
   numberOfPers: number;
 };
@@ -29,6 +30,12 @@ export default function PetsContextProvider({
   const selectedPet = pets.find((pet) => pet.id === selectedPetId);
   const numberOfPers = pets.length;
 
+  function handleCheckoutPet(id: string) {
+    const filteredWithNiPetArray = pets.filter((pet) => pet.id !== id);
+    setPetsData(filteredWithNiPetArray);
+    setPetId(null);
+  }
+
   return (
     <PetsContext.Provider
       value={{
@@ -37,6 +44,7 @@ export default function PetsContextProvider({
         handleChangePetId,
         selectedPet,
         numberOfPers,
+        handleCheckoutPet,
       }}
     >
       {children}
