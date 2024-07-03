@@ -1,10 +1,10 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -22,10 +22,11 @@ export default function petButtons({
   children,
   onClick,
 }: TButtonProps) {
+  const [isOpenModal, setIsOpenModal] = useState(false);
   if (actionType === "add" || actionType === "edit") {
     return (
       <>
-        <Dialog>
+        <Dialog open={isOpenModal} onOpenChange={setIsOpenModal}>
           <DialogTrigger asChild>
             {actionType === "add" ? (
               <Button size={"icon"}>
@@ -40,16 +41,17 @@ export default function petButtons({
               <DialogTitle>
                 {actionType === "add" ? "Add pet" : "Edit pet"}
               </DialogTitle>
-              <PetForm actionType={actionType} />
+              <PetForm
+                onFormSubmission={() => setIsOpenModal(false)}
+                actionType={actionType}
+              />
             </DialogHeader>
           </DialogContent>
         </Dialog>
       </>
     );
   }
-  // if (actionType === "edit") {
-  //   return <Button variant={"secondary"}>{children}</Button>;
-  // }
+
   if (actionType === "checkout") {
     return (
       <Button onClick={onClick} variant={"secondary"}>

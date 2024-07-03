@@ -1,6 +1,5 @@
 "use client";
 import { usePetsContext, useSearchFormContext } from "@/lib/hooks";
-import { TPet } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
