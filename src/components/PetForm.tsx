@@ -1,3 +1,47 @@
-export default function PetForm() {
-  return <div>PetForm</div>;
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "./ui/button";
+
+type TFormProps = {
+  actionType: "add" | "edit";
+};
+
+export default function PetForm({ actionType }: TFormProps) {
+  return (
+    <form className=" flex flex-col">
+      <div className=" space-y-3">
+        <div className="space-y-1">
+          <Label htmlFor="name">Name</Label>
+          <Input id="name" type="text" />
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="ownerName">Owner Name</Label>
+
+          <Input id="ownerName" type="text" />
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="imageUrl">Image Url</Label>
+
+          <Input id="imageUrl" type="text" />
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="age">Age</Label>
+          <Input id="age" type="number" />
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="notes">Notes</Label>
+          <Textarea id="notes" rows={3} />
+        </div>
+      </div>
+      <Button className=" mt-5 self-end">
+        {" "}
+        {actionType === "add" ? "Add" : "Edit"}
+      </Button>
+    </form>
+  );
+}
+
+{
+  /* <Label htmlFor="email">Your email address</Label> */
 }

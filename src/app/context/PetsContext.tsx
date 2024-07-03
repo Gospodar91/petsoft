@@ -36,6 +36,9 @@ export default function PetsContextProvider({
     setPetId(null);
   }
 
+  function handlePet(newPet: TPet) {
+    setPetsData((prev) => [...prev, newPet]);
+  }
   return (
     <PetsContext.Provider
       value={{

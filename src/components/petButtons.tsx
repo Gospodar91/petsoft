@@ -35,15 +35,14 @@ export default function petButtons({
               <Button variant={"secondary"}>{children}</Button>
             )}
           </DialogTrigger>
-          <DialogHeader>
-            <DialogTitle>
-              {actionType === "add" ? "Add pet" : "Edit pet"}
-              <DialogDescription></DialogDescription>
-            </DialogTitle>
-            <DialogContent>
-              <PetForm />
-            </DialogContent>
-          </DialogHeader>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                {actionType === "add" ? "Add pet" : "Edit pet"}
+              </DialogTitle>
+              <PetForm actionType={actionType} />
+            </DialogHeader>
+          </DialogContent>
         </Dialog>
       </>
     );
