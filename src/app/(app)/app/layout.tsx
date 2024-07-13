@@ -3,13 +3,12 @@ import { SeacrhContextProvider } from "@/app/context/SecrhFormContext";
 import BackGroundPatter from "@/components/backGroundPatter";
 import AppFooter from "@/components/footer/appFooter";
 import AppHeader from "@/components/header/appHeader";
-import { TPet, TReactNode } from "@/lib/types";
+import prisma from "@/lib/db";
+import { TReactNode } from "@/lib/types";
 
 export default async function Layout({ children }: TReactNode) {
-  const petData = await fetch(
-    "https://bytegrad.com/course-assets/projects/petsoft/api/pets"
-  );
-  const parsedPetData: TPet[] = await petData.json();
+  //сам layout ре рендерится и снова получает нівіе данні с ДБ
+  const parsedPetData = await prisma.pet.findMany();
 
   return (
     <>

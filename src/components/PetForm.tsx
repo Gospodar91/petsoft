@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "./ui/button";
 import { usePetsContext } from "@/lib/hooks";
+import { addPet } from "@/actions/actions";
 
 type TFormProps = {
   actionType: "add" | "edit";
@@ -12,28 +13,34 @@ type TFormProps = {
 
 export default function PetForm({ actionType, onFormSubmission }: TFormProps) {
   const { handleAddPet, selectedPet, handleEditPet } = usePetsContext();
-  function handlePetForm(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const pet = {
-      name: formData.get("name") as string,
-      ownerName: formData.get("ownerName") as string,
-      imageUrl:
-        (formData.get("imageUrl") as string) ||
-        "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
-      age: +(formData.get("age") as string),
-      notes: formData.get("notes") as string,
-    };
-    if (actionType === "edit") {
-      handleEditPet(selectedPet!.id, pet);
-    } else {
-      handleAddPet(pet);
-    }
-    onFormSubmission();
-  }
+  // function handlePetForm(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.currentTarget);
+  //   const pet = {
+  //     name: formData.get("name") as string,
+  //     ownerName: formData.get("ownerName") as string,
+  //     imageUrl:
+  //       (formData.get("imageUrl") as string) ||
+  //       "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
+  //     age: +(formData.get("age") as string),
+  //     notes: formData.get("notes") as string,
+  //   };
+  //   if (actionType === "edit") {
+  //     handleEditPet(selectedPet!.id, pet);
+  //   } else {
+  //     handleAddPet(pet);
+  //   }
+  //   onFormSubmission();
+  // }
 
   return (
-    <form onSubmit={handlePetForm} className=" flex flex-col">
+    <form
+      action={(formData) => {
+        addPet(formData);
+        onFormSubmission();
+      }}
+      className=" flex flex-col"
+    >
       <div className=" space-y-3">
         <div className="space-y-1">
           <Label htmlFor="name">Name</Label>

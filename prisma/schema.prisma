@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+//npx prisma db push- chnage schema in db logic 
+//npx prisma studio - open prisma studio in web
+//npx prisma db seed
+
+//Тут схема. Тут описываются модели данных, которые будут храниться в базе данных.
+//Seed-файлы — это файлы, которые позволяют заполнить базу данных начальными данными.
+//db.ts - это файл, который создает экземпляр PrismaClient и экспортирует его. Этот файл используется для взаимодействия с базой данных.
+model Pet {
+  id        String   @id @default(cuid())
+  name      String
+  ownerName String
+  imageUrl  String
+  age       Int
+  notes     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

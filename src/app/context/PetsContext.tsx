@@ -1,4 +1,5 @@
 "use client";
+import { addPet } from "@/actions/actions";
 import { TPet, TReactNode } from "@/lib/types";
 import React, { createContext, useState } from "react";
 
@@ -20,10 +21,13 @@ type TPetsContex = {
 export const PetsContext = createContext<TPetsContex | null>(null);
 
 export default function PetsContextProvider({
-  data,
+  data: pets,
   children,
 }: TPetsContextProvide) {
-  const [pets, setPetsData] = useState(data);
+  // после revalidatePath("/app/dashboard", "layout"); в actions.ts
+  //в Data приходят новіе данніе по запросу . Но посколько useState инициализируется один раз новіе данніе он не получает
+  // поєтому испольуем саму дату
+  // const [pets, setPetsData] = useState(data);
   const [selectedPetId, setPetId] = useState<string | null>(null);
 
   function handleChangePetId(id: string) {
@@ -34,16 +38,17 @@ export default function PetsContextProvider({
 
   function handleCheckoutPet(id: string) {
     const filteredWithNiPetArray = pets.filter((pet) => pet.id !== id);
-    setPetsData(filteredWithNiPetArray);
+    // setPetsData(filteredWithNiPetArray);
     setPetId(null);
   }
   function handleEditPet(petId: string, newPet: Omit<TPet, "id">) {
-    setPetsData((prev) =>
-      prev.map((pet) => (pet.id === petId ? { ...newPet, id: petId } : pet))
-    );
+    // setPetsData((prev) =>
+    //   prev.map((pet) => (pet.id === petId ? { ...newPet, id: petId } : pet))
+    // );
   }
   function handleAddPet(newPet: Omit<TPet, "id">) {
-    setPetsData((prev) => [...prev, { ...newPet, id: Date.now().toString() }]);
+    addPet(newPet);
+    // setPetsData((prev) => [...prev, { ...newPet, id: Date.now().toString() }]);
   }
   return (
     <PetsContext.Provider
