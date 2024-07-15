@@ -1,7 +1,8 @@
 "use client";
-import { addPet } from "@/actions/actions";
+import { addPet, deletePet, editPet } from "@/actions/actions";
 import { TPet, TReactNode } from "@/lib/types";
-import React, { createContext, useState } from "react";
+import React, { createContext, useOptimistic, useState } from "react";
+import { toast } from "sonner";
 
 type TPetsContextProvide = {
   data: TPet[];
@@ -11,9 +12,9 @@ type TPetsContex = {
   pets: TPet[];
   selectedPetId: string | null;
   handleChangePetId: (id: string) => void;
-  handleCheckoutPet: (id: string) => void;
-  handleAddPet: (newPet: Omit<TPet, "id">) => void;
-  handleEditPet: (petId: string, newPet: Omit<TPet, "id">) => void;
+  handleCheckoutPet: (id: string) => Promise<void>;
+  handleAddPet: (newPet: Omit<TPet, "id">) => Promise<void>;
+  handleEditPet: (petId: string, newPet: Omit<TPet, "id">) => Promise<void>;
   selectedPet: TPet | undefined;
   numberOfPers: number;
 };
@@ -21,7 +22,7 @@ type TPetsContex = {
 export const PetsContext = createContext<TPetsContex | null>(null);
 
 export default function PetsContextProvider({
-  data: pets,
+  data,
   children,
 }: TPetsContextProvide) {
   // после revalidatePath("/app/dashboard", "layout"); в actions.ts
@@ -29,31 +30,62 @@ export default function PetsContextProvider({
   // поєтому испольуем саму дату
   // const [pets, setPetsData] = useState(data);
   const [selectedPetId, setPetId] = useState<string | null>(null);
+  /// оптимистичное обновление первій аргумент -(initialState) ,второй аргумент -функция
+  // Функця в качествет аргумента по сути имеет prevState для работы с ним .Второй-опитимичтичные данные которые нужно обновить UI
+  const [optimisticPets, setOptimisticPets] = useOptimistic(
+    data,
+    (state, { action, payload }) => {
+      switch (action) {
+        case "add": {
+          return [...state, payload];
+        }
+        case "remove": {
+          return state.filter((pet) => pet.id !== payload);
+        }
+        case "edit": {
+          return state.map((pet) => {
+            if (pet.id === payload.petId) {
+              return { ...pet, ...payload.newPet };
+            }
+            return pet;
+          });
+        }
+      }
+    }
+  );
+
+  async function handleAddPet(newPet: Omit<TPet, "id">) {
+    setOptimisticPets({ action: "add", payload: newPet });
+    //addPet(newPet) - Server action
+    const error = await addPet(newPet);
+    if (error?.message) {
+      toast.error(error.message);
+    }
+  }
 
   function handleChangePetId(id: string) {
     setPetId(id);
   }
-  const selectedPet = pets.find((pet) => pet.id === selectedPetId);
-  const numberOfPers = pets.length;
+  const selectedPet = optimisticPets.find((pet) => pet.id === selectedPetId);
+  const numberOfPers = optimisticPets.length;
 
-  function handleCheckoutPet(id: string) {
-    const filteredWithNiPetArray = pets.filter((pet) => pet.id !== id);
-    // setPetsData(filteredWithNiPetArray);
+  async function handleCheckoutPet(id: string) {
+    setOptimisticPets({ action: "remove", payload: id });
+    await deletePet(id);
     setPetId(null);
   }
-  function handleEditPet(petId: string, newPet: Omit<TPet, "id">) {
-    // setPetsData((prev) =>
-    //   prev.map((pet) => (pet.id === petId ? { ...newPet, id: petId } : pet))
-    // );
+  async function handleEditPet(petId: string, newPet: Omit<TPet, "id">) {
+    setOptimisticPets({ action: "edit", payload: { petId, newPet } });
+    const error = await editPet(petId, newPet);
+    if (error?.message) {
+      toast.error(error.message);
+    }
   }
-  function handleAddPet(newPet: Omit<TPet, "id">) {
-    addPet(newPet);
-    // setPetsData((prev) => [...prev, { ...newPet, id: Date.now().toString() }]);
-  }
+
   return (
     <PetsContext.Provider
       value={{
-        pets,
+        pets: optimisticPets,
         selectedPetId,
         handleChangePetId,
         selectedPet,

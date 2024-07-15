@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import PetForm from "./PetForm";
+import { flushSync } from "react-dom";
 
 type TButtonProps = {
   actionType: "add" | "edit" | "checkout";
@@ -42,7 +43,7 @@ export default function petButtons({
                 {actionType === "add" ? "Add pet" : "Edit pet"}
               </DialogTitle>
               <PetForm
-                onFormSubmission={() => setIsOpenModal(false)}
+                onFormSubmission={() => flushSync(() => setIsOpenModal(false))}
                 actionType={actionType}
               />
             </DialogHeader>

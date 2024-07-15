@@ -2,9 +2,11 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "./ui/button";
 import { usePetsContext } from "@/lib/hooks";
-import { addPet } from "@/actions/actions";
+import { addPet, editPet } from "@/actions/actions";
+import PetFormBtn from "./petFormBtn";
+import { useFormState } from "react-dom";
+import { toast } from "sonner";
 
 type TFormProps = {
   actionType: "add" | "edit";
@@ -13,32 +15,30 @@ type TFormProps = {
 
 export default function PetForm({ actionType, onFormSubmission }: TFormProps) {
   const { handleAddPet, selectedPet, handleEditPet } = usePetsContext();
-  // function handlePetForm(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.currentTarget);
-  //   const pet = {
-  //     name: formData.get("name") as string,
-  //     ownerName: formData.get("ownerName") as string,
-  //     imageUrl:
-  //       (formData.get("imageUrl") as string) ||
-  //       "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
-  //     age: +(formData.get("age") as string),
-  //     notes: formData.get("notes") as string,
-  //   };
-  //   if (actionType === "edit") {
-  //     handleEditPet(selectedPet!.id, pet);
-  //   } else {
-  //     handleAddPet(pet);
-  //   }
-  //   onFormSubmission();
-  // }
-
+  // const [error, setFormState] = useFormState(addPet, {});
+  // console.log("state", state);
   return (
     <form
-      action={(formData) => {
-        addPet(formData);
+      action={async (formData) => {
         onFormSubmission();
+
+        const newPet = {
+          name: formData.get("name") as string,
+          ownerName: formData.get("ownerName") as string,
+          imageUrl:
+            (formData.get("imageUrl") as string) ||
+            ("https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png" as string),
+          age: Number(formData.get("age")),
+          notes: formData.get("notes") as string,
+        };
+
+        if (actionType === "add") {
+          await handleAddPet(newPet);
+        } else if (actionType === "edit") {
+          await handleEditPet(selectedPet!.id, newPet);
+        }
       }}
+      // action={setFormState}
       className=" flex flex-col"
     >
       <div className=" space-y-3">
@@ -94,10 +94,7 @@ export default function PetForm({ actionType, onFormSubmission }: TFormProps) {
           />
         </div>
       </div>
-      <Button className=" mt-5 self-end">
-        {" "}
-        {actionType === "add" ? "Add" : "Edit"}
-      </Button>
+      <PetFormBtn actionType={actionType} />
     </form>
   );
 }

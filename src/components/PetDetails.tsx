@@ -3,13 +3,15 @@ import Image from "next/image";
 import { usePetsContext } from "@/lib/hooks";
 import { TPet } from "@/lib/types";
 import PetButtons from "./petButtons";
+import { deletePet } from "@/actions/actions";
+import { useTransition } from "react";
 
 type TgeneralProps = {
   pet: TPet;
 };
 
 export default function PetDetails() {
-  const { selectedPet } = usePetsContext();
+  const { selectedPet, handleCheckoutPet } = usePetsContext();
   return (
     <section className="flex flex-col w-full h-full">
       {!selectedPet ? (
@@ -41,7 +43,9 @@ function TopBar({ pet }: TgeneralProps) {
       <div className=" ml-auto space-x-3">
         <PetButtons actionType="edit">Edit</PetButtons>
         <PetButtons
-          onClick={() => handleCheckoutPet(pet?.id)}
+          onClick={async () => {
+            await handleCheckoutPet(pet?.id);
+          }}
           actionType="checkout"
         >
           Checkout

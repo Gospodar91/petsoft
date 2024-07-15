@@ -5,6 +5,7 @@ import AppFooter from "@/components/footer/appFooter";
 import AppHeader from "@/components/header/appHeader";
 import prisma from "@/lib/db";
 import { TReactNode } from "@/lib/types";
+import { Toaster } from "@/components/ui/sonner";
 
 export default async function Layout({ children }: TReactNode) {
   //сам layout ре рендерится и снова получает нівіе данні с ДБ
@@ -21,6 +22,7 @@ export default async function Layout({ children }: TReactNode) {
             <AppFooter />;
           </SeacrhContextProvider>
         </PetsContextProvider>
+        <Toaster position="top-right" />
       </div>
     </>
   );
