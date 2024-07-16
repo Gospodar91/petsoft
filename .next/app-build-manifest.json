@@ -11,20 +11,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(marketing)/page.js"
     ],
-    "/(app)/app/layout": [
+    "/(auth)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(app)/app/layout.js"
+      "static/chunks/app/(auth)/layout.js"
     ],
-    "/(app)/app/dashboard/page": [
+    "/(auth)/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(app)/app/dashboard/page.js"
-    ],
-    "/(app)/app/account/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(app)/app/account/page.js"
+      "static/chunks/app/(auth)/login/page.js"
     ]
   }
 }

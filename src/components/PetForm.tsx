@@ -37,7 +37,7 @@ export default function PetForm({ actionType, onFormSubmission }: TFormProps) {
 
   return (
     <form
-      action={async (formData) => {
+      action={async () => {
         const resultOfValidation = await trigger();
         if (!resultOfValidation) {
           return;
