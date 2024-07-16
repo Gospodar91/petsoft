@@ -60,6 +60,7 @@ export default function PetsContextProvider({
 
   async function handleAddPet(newPet: TPetEssential) {
     setOptimisticPets({ action: "add", payload: newPet });
+
     //addPet(newPet) - Server action
     const error = await addPet(newPet);
     if (error?.message) {
