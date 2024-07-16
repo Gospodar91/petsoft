@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { useFormStatus } from "react-dom";
 
-type TpetFormBtnProps = { actionType: string };
+type TpetFormBtnProps = { actionType: "add" | "edit" };
 
 export default function PetFormBtn({ actionType }: TpetFormBtnProps) {
   const { pending } = useFormStatus();

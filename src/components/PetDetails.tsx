@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
 import { usePetsContext } from "@/lib/hooks";
-import { TPet } from "@/lib/types";
+import { Pet } from "@prisma/client";
 import PetButtons from "./petButtons";
 import { deletePet } from "@/actions/actions";
 import { useTransition } from "react";
 
 type TgeneralProps = {
-  pet: TPet;
+  pet: Pet;
 };
 
 export default function PetDetails() {
@@ -39,12 +39,12 @@ function TopBar({ pet }: TgeneralProps) {
         height={45}
         className=" w-[75px] h-[75px] rounded-full object-cover"
       />
-      <h2 className=" text-3xl font-semibold  leading-7  ml-5">{pet?.name}</h2>
+      <h2 className=" text-3xl font-semibold  leading-7  ml-5">{pet.name}</h2>
       <div className=" ml-auto space-x-3">
         <PetButtons actionType="edit">Edit</PetButtons>
         <PetButtons
           onClick={async () => {
-            await handleCheckoutPet(pet?.id);
+            await handleCheckoutPet(pet.id);
           }}
           actionType="checkout"
         >

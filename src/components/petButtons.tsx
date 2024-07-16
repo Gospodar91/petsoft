@@ -43,6 +43,7 @@ export default function petButtons({
                 {actionType === "add" ? "Add pet" : "Edit pet"}
               </DialogTitle>
               <PetForm
+                // flushSync - синхронизация состояния useState то есть он будет первым обновлен
                 onFormSubmission={() => flushSync(() => setIsOpenModal(false))}
                 actionType={actionType}
               />
