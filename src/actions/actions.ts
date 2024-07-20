@@ -1,11 +1,17 @@
 "use server";
 
+import { signIn } from "@/lib/auth";
 import prisma from "@/lib/db";
-import { TPetEssential } from "@/lib/types";
 import { sleep } from "@/lib/utils";
 import { petFormZodValidation, petIdValidation } from "@/lib/validations";
-import { Pet } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+
+export async function login(formData: FormData) {
+  const authData = Object.fromEntries(formData.entries());
+
+  //спец функция некст аус.Говорим что авторизация по нашим кредам
+  signIn("credentials", authData);
+}
 
 export async function addPet(newPet: unknown) {
   //ставим unknown так как у unknow нет редактируеміх свойст .нельзя записать pet.age=rm-rf .

@@ -2,20 +2,21 @@ import { Label } from "@radix-ui/react-label";
 import React from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { login } from "@/actions/actions";
 
-export default function AuthForm() {
+export default function AuthForm({ type }: { type: "login" | "signup" }) {
   return (
-    <form>
+    <form action={login}>
       <div className="space-y-2 mb-2">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" />
+        <Input name="email" id="email" type="email" />
       </div>
       <div className="space-y-2 mb-2">
         <Label htmlFor="passsword">Passsword</Label>
-        <Input id="passsword" type="passsword" />
+        <Input name="password" id="passsword" type="passsword" />
       </div>
       <Button className="mt-4" type="submit">
-        Log in
+        {type === "login" ? "Log in" : "Sign up"}
       </Button>
     </form>
   );

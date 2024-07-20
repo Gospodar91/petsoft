@@ -7,7 +7,7 @@ export default function SignUp() {
   return (
     <main>
       <H1 className="text-center mb-5">Sign up</H1>
-      <AuthForm />
+      <AuthForm type="signup" />
       <p className=" text-sm  mt-6  text-zinc-500">
         Already have an account ?{" "}
         <Link className="font-medium" href="/auth/signup">
